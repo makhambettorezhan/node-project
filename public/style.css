@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	margin: 0;
+	font: 'Roboto', sans-serif;
+	padding: 1rem;
+	background: #000000;
+	color: #5cdb95;
+}
+
+.clr {
+	clear: both;
+}
+
+.container {
+	width: 70%;
+	height: 60%;
+	margin: 0 auto;
+	border: 1px solid white;
+	text-align: center;
+}
+
+.login {
+	width: 5rem;
+	padding: 0;
+}
+
+.signup {
+	width: 5rem;
+	padding: 0;
+}
+.block {
+	width: 30%;
+	margin: 0 auto;
+	padding-top: 1rem;
+}
+
+.block form {
+	width: 50%;
+	float: left;
+	display: inline;
+	box-sizing: border-box;
+}
+
+
+.btn {
+	height: 2rem;
+	border: 2px solid #5cdb95;
+	border-radius: .5rem;
+}
+
+.btn:hover {
+	color: #fff !important;
+}
+
+.paragraph {
+	width: 50%;
+	margin: 0 auto;
+	padding-top: 2rem;
+	color: #fff;
+}
+
+
+
+/* ################### login.hbs ######################### */
