@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const hsb = require('hbs');
 const passport = require('passport');
 
+var logger = require('morgan');
+
+var session = require('express-session');
 
 const config = require('./config');
 
@@ -13,9 +16,18 @@ const PORT = process.env.PORT || 3000;
 
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/views');
+
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
+
+
+
+app.use(express.static(__dirname + '/public'))
 
 app.use(passport.initialize());
 
