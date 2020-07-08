@@ -67,17 +67,13 @@ userRouter.post('/login/submit',  passport.authenticate('local'), (req, res) => 
 
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'application/json');
-//	res.setHeader('Authorization', 'bearer ' + token);
-	
-	userRouter.get('/*', (requence, response) => {
-		requence.setHeader('Authorization', 'Bearer ' + token);
-	});
 	res.json({ success: true, token: token, status: 'You are successfully logged in!' });
 });
 
 
 userRouter.get('/result', authenticate.verifyUser, (req, res, next) => {
 	res.statusCode = 200;
+	console.log(req.query.token);
 	console.log(req.headers);
 	res.json({ 'success': true });
 });
