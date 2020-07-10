@@ -27,7 +27,7 @@ userRouter.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res
 
 
 userRouter.get('/login', (req, res, next) => {
-
+	
 	res.render('login.hbs', {
 		pageTitle: 'Welcome to the login page'
 	});
@@ -76,8 +76,12 @@ userRouter.post('/login/submit',  passport.authenticate('local'), (req, res) => 
 	var token = authenticate.getToken({ _id: req.user._id });
 	
 	res.statusCode = 200;
-	res.setHeader('Content-Type', 'application/json');
-	res.json({ success: true, token: token, status: 'You are successfully logged in!' });
+
+	res.render('login.submit.hbs', {
+		pageTitle: 'Welcome ' + req.user.username,
+		token
+	});
+	//res.json({ success: true, token: token, status: 'You are successfully logged in!' });
 	
 });
 
