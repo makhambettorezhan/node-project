@@ -11,10 +11,20 @@ const userRouter = express.Router();
 const LocalStrategy = require('passport-local');
 
 const bodyParser = require('body-parser');
+
 userRouter.use(bodyParser.json());
-
-
 userRouter.use(express.static(config.pathString + '/public'));
+
+userRouter.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+	User.find({})
+	.then(users => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'application/json');
+		res.json(users);
+	})
+	.catch(err => console.log(err));
+});
+
 
 userRouter.get('/login', (req, res, next) => {
 
@@ -64,28 +74,26 @@ userRouter.post('/signup/submit', (req, res, next) => {
 
 userRouter.post('/login/submit',  passport.authenticate('local'), (req, res) => {
 	var token = authenticate.getToken({ _id: req.user._id });
-
+	
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'application/json');
 	res.json({ success: true, token: token, status: 'You are successfully logged in!' });
+	
 });
 
-
-userRouter.get('/result', authenticate.verifyUser, (req, res, next) => {
-	res.statusCode = 200;
-	console.log(req.query.token);
-	console.log(req.headers);
-	res.json({ 'success': true });
-});
 
 userRouter.get('/logout', (req, res) => {
-	if(req.session) {
-		req.session.destroy();
+	if(req.query.access_token) {
+		//req.session.destroy();
 		res.clearCookie();
 		res.redirect('/');
 	} else {
 		var err = new Error('You are not logged in');
-		err.status = 200;
+		err.status = 401;
+		
+		res.render('logout.hbs', {
+			message: 'You are not logged in.'
+		});
 		console.log(err); 
 	}
 });

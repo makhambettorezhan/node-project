@@ -1,23 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const hsb = require('hbs');
 const passport = require('passport');
-
 var logger = require('morgan');
 
-var session = require('express-session');
 
 const config = require('./config');
 
 const userRouter = require('./routes/userRouter');
+const filmRouter = require('./routes/filmRouter');
+
 
 const PORT = process.env.PORT || 3000;
 
 var app = express();
 
 app.set('views', __dirname + '/views');
-
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -47,7 +46,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/users', userRouter);
-
+app.use('/films', filmRouter);
 
 app.listen(PORT, () => {
 	console.log('Server is up for port ' + PORT);
