@@ -11,7 +11,7 @@ const config = require('../config');
 const filmRouter = express.Router();
 
 filmRouter.use(bodyParser.json());
-filmRouter.use(express.static(config.pathString + '/public'));
+//filmRouter.use(express.static(config.pathString + '/public'));
 
 filmRouter.get('/', (req, res, next) => {
     res.render('films.hbs', {
@@ -58,5 +58,17 @@ filmRouter.get('/del', authenticate.verifyUser, authenticate.verifyAdmin, (req, 
         res.json(resp);
     })
     .catch(err => console.log(err));
-})
+});
+
+filmRouter.get('/show/:movieId', (req, res, next) => {
+    Films.findById( req.params.movieId )
+    .then(film => {
+        console.log( 'Film is ' + film );
+        
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(film);
+    })
+    .catch(err => console.log(err));
+});
 module.exports = filmRouter;
