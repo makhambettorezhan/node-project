@@ -72,27 +72,22 @@ favoriteRouter.post('/submit', authenticate.verifyUser, (req, res, next) => {
             })
             .catch(err => console.log(err));
         } else {
-            Favorites.create({ user: req.user._id })
-            .then(favorite => {
-                if(favorite.films.indexOf(req.body.filmId) < 0) { 
-                    favorite.films.push(req.body.filmId);
-                
-                    favorite.save()
-                    .then(favorite => {
-                        console.log('Favorite created ', favorite);
-                        
-                        res.statusCode = 200;
-                        res.setHeader('Content-Type', 'application/json');
-                        res.json(favorite);
-                    });
-                } else {
+
+            if(favorite.films.indexOf(req.body.filmId) < 0) { 
+                favorite.films.push(req.body.filmId);
+            
+                favorite.save()
+                .then(favorite => {
+                    console.log('Favorite created ', favorite);
+                    
                     res.statusCode = 200;
-                    console.log('Favorite already added');
-                }
-                
-                
-            })
-            .catch(err => console.log(err));
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(favorite);
+                });
+            } else {
+                res.statusCode = 200;
+                console.log('Favorite already added');
+            }
         }
     });
 });
