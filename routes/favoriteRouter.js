@@ -93,6 +93,41 @@ favoriteRouter.post('/submit', authenticate.verifyUser, (req, res, next) => {
 });
 
 
+favoriteRouter.delete('/del', authenticate.verifyUser, (req, res, next) => {
+    Favorites.remove({ user: req.user._id })
+    .then(resp => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(resp);
+    })
+    .catch(err => console.log(err));
+});
+
+
+favoriteRouter.get('/del/:filmId', authenticate.verifyUser, (req, res, next) => {
+    Favorites.findOne({ user: req.user._id }, (err, favorite) => {
+        if (err) console.log(err);
+
+        if(!favorite) {
+            res.statusCode = 200;
+            res.end('No favorite to delete');
+        } 
+
+        var index = favorite.films.indexOf(req.params.filmId);
+        if(index > -1) {
+            favorite.films.splice(index, 1);
+
+            favorite.save()
+            .then(resp => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(resp);
+            })
+            .catch(err => console.log(err));
+        }
+    })
+});
+
 
 module.exports = favoriteRouter;
 

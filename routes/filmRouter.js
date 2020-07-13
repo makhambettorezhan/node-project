@@ -49,10 +49,19 @@ filmRouter.post('/add/submit', (req, res, next) => {
 });
 
 filmRouter.get('/del', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
-    Films.remove({})
+    Films.deleteMany({})
     .then(resp => {
-        console.log('All Films were deleted:\n' + films);
-        
+             
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(resp);
+    })
+    .catch(err => console.log(err));
+});
+
+filmRouter.get('/del/:filmId', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    Films.findByIdAndRemove(req.params.filmId)
+    .then(resp => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(resp);

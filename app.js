@@ -31,7 +31,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 
 const url = config.mongoUrl;
-const connect = mongoose.connect(url);
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 connect.then(db => {
 	console.log('Connected correctly to the database');
