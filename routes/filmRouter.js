@@ -22,12 +22,49 @@ filmRouter.get('/', (req, res, next) => {
 filmRouter.get('/show', authenticate.verifyUser, (req, res, next) => {
     Films.find({})
     .then(films => {
+       
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(films);
     })
     .catch(err => console.log(err));
 });
+
+filmRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
+    Films.find({})
+    .then(films => {
+        
+
+        var array = [];
+        for(var i = 0; i < 3; i++) {
+            array[i] = { 
+                title: films[i].title,
+                year: films[i].year,
+                genre: films[i].genre,
+                poster: films[i].poster
+            };
+        }
+        
+        var titles = array.map(item => item['title']);
+        var years = array.map(item => item['year']);
+        var genres = array.map(item => item['genre'] + ';'); //genres = array.join(';');
+        var posters = array.map(item => item['poster']);
+
+        
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.render('films.show.hbs', {
+            pageTitle: 'A List Of Films',
+            titles,
+            years,
+            genres,
+            posters
+        });
+    })
+    .catch(err => console.log(err));
+});
+
 
 filmRouter.get('/add', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.render('films.add.hbs', {
@@ -69,8 +106,8 @@ filmRouter.get('/del/:filmId', authenticate.verifyUser, authenticate.verifyAdmin
     .catch(err => console.log(err));
 });
 
-filmRouter.get('/show/:movieId', (req, res, next) => {
-    Films.findById( req.params.movieId )
+filmRouter.get('/show/:filmId', (req, res, next) => {
+    Films.findById( req.params.filmId )
     .then(film => {
         console.log( 'Film is ' + film );
         
