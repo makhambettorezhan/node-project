@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const Films = require('../models/films');
 
 const config = require('../config');
-
+const imdb = require('../imdb');
 
 
 const filmRouter = express.Router();
@@ -73,6 +73,14 @@ filmRouter.get('/add', authenticate.verifyUser, authenticate.verifyAdmin, (req, 
     });
 });
 
+filmRouter.get('/addApi', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    res.render('films.addApi.hbs', {
+        pageTitle: 'Add Films Using IMDb API',
+        message: 'The Page Where You Can Add Various Films of Your Choice'
+    });
+});
+
+
 filmRouter.post('/add/submit', (req, res, next) => {
     Films.create(req.body)
     .then(film => {
@@ -83,6 +91,29 @@ filmRouter.post('/add/submit', (req, res, next) => {
         res.json(film);
     })
     .catch(err => console.log(err));
+});
+
+filmRouter.post('/addApi/submit', (req, res, next) => {
+    var film_body;
+    imdb.getMovie(req.body.title, films => {
+        film_body = {
+            title: films.Title,
+            year: films.Year,
+            genre: films.Genre,
+            poster: films.Poster
+        };
+
+        Films.create(film_body)
+        .then(film => {
+            console.log('Film was added ' + film);
+            
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(film);
+        })
+        .catch(err => console.log(err));
+    });
+    
 });
 
 filmRouter.get('/del', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
