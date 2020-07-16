@@ -36,7 +36,7 @@ filmRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
         
 
         var array = [];
-        for(var i = 0; i < 3; i++) {
+        for(var i = 0; films[i]; i++) {
             array[i] = { 
                 title: films[i].title,
                 year: films[i].year,
@@ -47,7 +47,7 @@ filmRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
         
         var titles = array.map(item => item['title']);
         var years = array.map(item => item['year']);
-        var genres = array.map(item => item['genre'] + ';'); //genres = array.join(';');
+        var genres = array.map(item => item['genre'] + ';');
         var posters = array.map(item => item['poster']);
 
         
@@ -55,7 +55,7 @@ filmRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');
         res.render('films.show.hbs', {
-            pageTitle: 'A List Of Films',
+            pageTitle: "Here's the Movie List, " + req.user.username,
             titles,
             years,
             genres,

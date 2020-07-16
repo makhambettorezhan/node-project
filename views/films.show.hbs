@@ -3,29 +3,22 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/style.css">
-	<title>Main Page</title>
+    <link rel="stylesheet" href="/show.css">
+	<title>{{pageTitle}}</title>
 </head>
 <body>
 	<div class="container d-flex flex-column justify-content-center align-items-center">
 		<h2>{{pageTitle}}</h2>
         <p id="txt1"></p>
-        <button id="copy" class="btn" style="width: 4rem;">Doit</button>
+        <button id="show" class="btn" style="width: 8rem;">Show Movies</button>
 		
         <p id="titles" class="d-none">{{titles}}</p>
         <p id="years" class="d-none">{{years}}</p>
         <p id="genres" class="d-none">{{genres}}</p>
         <p id="posters" class="d-none">{{posters}}</p>
 
-        <div class="row" style='visibility: hidden'>
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top"  alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <p class="card-text"></p>
-                    </div>
-                </div>
-            </div>
+        <div class="row" style='visibility: hidden; color: #000;'>
+            
         </div>
     
 	</div>
@@ -48,20 +41,48 @@
 
             genres[genres.length - 1] = genres[genres.length - 1].replace(';', '');
 
+           
+            $('.row').css('visibility', 'visible');
+           
+
             for(var i = 0; i < titles.length; i++) {
-                console.log(titles[i]);
-                console.log(years[i]);
-                console.log(genres[i]);
-                console.log(posters[i] + '\n\n');
+                var $div_col = $("<div>", {
+                    'class': 'col-3 py-4'
+                });
+
+                var $div_card = $("<div>", {
+                    'class': 'card',    
+                });
+
+                var $img_top = $('<img>', { 'class': 'card-img-top' });
+                $img_top.attr('src', posters[i]);
+
+                var $div_cardbody = $('<div>', { 'class': 'card-body'});
+
+                var $h5 = $('<h5>', { 'class': 'card-title' });
+                $h5.html(titles[i] + ' (' + years[i] + ')');
+
+
+                var $p = $('<p>', { 'class': 'card-text' });
+                $p.html(genres[i]);
+
+                $div_cardbody.append($h5, $p);
+
+                $div_card.append($img_top, $div_cardbody);
+
+                $div_col.append($div_card);
+
+                $('.row').append($div_col);
+
+                $('#show').css('display', 'none');
             }
-            $('.row').css('visibility', 'visible')
-            $('.card-img-top').attr('src', 'https://i.pinimg.com/originals/0f/03/e6/0f03e6733b0cf567cc92e8e20290462f.jpg');
-            $('.card-title').html(titles[0] + ' (' + years[0] + ')');
-            $('.card-text').html(genres[0]);
+        
+            
         }
 
        
-        document.querySelector("#copy").addEventListener("click", doit);
+        document.querySelector("#show").addEventListener("click", doit);
+        
     </script>
 </body>
 </html>
