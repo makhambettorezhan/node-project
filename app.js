@@ -10,6 +10,7 @@ const config = require('./config');
 const userRouter = require('./routes/userRouter');
 const filmRouter = require('./routes/filmRouter');
 const favoriteRouter = require('./routes/favoriteRouter');
+const musicRouter = require('./routes/musicRouter');
 
 const PORT = process.env.PORT || 3000;
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRouter);
 app.use('/films', filmRouter);
 app.use('/favorites', favoriteRouter);
+app.use('/music', musicRouter);
 
 app.listen(PORT, () => {
 	console.log('Server is up for port ' + PORT);
