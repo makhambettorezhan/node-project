@@ -45,7 +45,7 @@ filmRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
             };
         }
         
-        var titles = array.map(item => item['title']);
+        var titles = array.map(item => item['title'] + ';');
         var years = array.map(item => item['year']);
         var genres = array.map(item => item['genre'] + ';');
         var posters = array.map(item => item['poster']);

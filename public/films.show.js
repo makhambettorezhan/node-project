@@ -4,13 +4,14 @@ function doit() {
     var str_genres = document.querySelector('#genres').innerHTML;
     var str_posters = document.querySelector('#posters').innerHTML;
 
-    var titles = str_titles.split(',');
+    var titles = str_titles.split(';,');
     var years= str_years.split(',');
     var genres = str_genres.split(';,');
     var posters = str_posters.split(',');
 
 
     genres[genres.length - 1] = genres[genres.length - 1].replace(';', '');
+    titles[titles.length - 1] = titles[titles.length - 1].replace(';', '');
 
    
     $('.row').css('visibility', 'visible');
