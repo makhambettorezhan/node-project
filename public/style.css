@@ -63,5 +63,11 @@ body {
 }
 
 
+@media(max-width: 1366px) {
+	.container {
+		width: 90%;
+	}
+}
+
 
 /* ################### login.hbs ######################### */
