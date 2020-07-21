@@ -79,6 +79,59 @@ musicRouter.post('/add/submit', (req, res, next) => {
     
 });
 
+musicRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
+    Albums.find({})
+    .then(albums => {
+        var titles = [];
+        var covers = [];
+        var artists = [];
+        var ids = [];
+
+        for( var i = 0; albums[i]; i++) {
+            titles.push(albums[i].title + ';'); // ; stand for the end of current title
+            covers.push(albums[i].cover);
+            artists.push(albums[i].artist + ';');
+            ids.push(albums[i]._id);
+        }
+        
+        res.render('albums.display.hbs', {
+            pageTitle: 'Albums selected by Admin',
+            titles,
+            covers,
+            artists,
+            ids,
+            token: req.query.access_token
+        });
+    })
+    .catch(err => console.log(err));
+});
+musicRouter.get('/showPretty/:albumId', authenticate.verifyUser, (req, res, next) => {
+    Albums.findById({ _id: req.params.albumId })
+    .then(album => {
+        
+        var track_titles = [];
+        var track_previews = [];
+        var track_durations = [];
+        
+        for( var i = 0; i < album.tracks.length; i++) {
+            track_titles[i] = album.tracks[i].title + ';';
+            track_previews[i] = album.tracks[i].preview;
+            track_durations[i] = album.tracks[i].duration;
+        }
+        
+        res.render('albums.show.hbs', {
+            pageTitle: 'Album selected by Admin',
+            title: album.title,
+            cover: album.cover,
+            artist: album.artist,
+            track_titles,
+            track_previews,
+            track_durations
+        });
+        
+    })
+    .catch(err => console.log(err));
+});
 
 musicRouter.get('/del', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Albums.deleteMany({})
