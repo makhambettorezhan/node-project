@@ -11,8 +11,16 @@ const favoriteRouter = express.Router();
 favoriteRouter.use(bodyParser.json());
 
 
-
 favoriteRouter.get('/', authenticate.verifyUser, (req, res, next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+   
+    res.render('favorites.hbs', {
+        pageTitle: 'Favorites Section for ' + req.user.username
+    });
+});
+
+favoriteRouter.get('/show', authenticate.verifyUser, (req, res, next) => {
     Favorites.findOne({ user: req.user._id }, (err, favorite) => {
         if(err) console.log(err);
 
