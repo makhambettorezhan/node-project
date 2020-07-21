@@ -81,8 +81,17 @@ userRouter.post('/login/submit',  passport.authenticate('local'), (req, res) => 
 		pageTitle: 'Welcome ' + req.user.username,
 		token
 	});
-	//res.json({ success: true, token: token, status: 'You are successfully logged in!' });
 	
+});
+
+userRouter.get('/del/:userId', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+	User.findByIdAndRemove(req.params.userId)
+	.then(user => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'application/json');
+		res.json( user );
+	})
+	.catch(err => console.log(err));
 });
 
 
