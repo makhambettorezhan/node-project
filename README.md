@@ -144,9 +144,11 @@
 Also, this project uses jQuery, Bootstrap4 for rendering most of the pages
 
 To run the project, do the following:
-
+```sh
 $ npm start
-
+```
 From another tab for mongodb directory, type:
 
+```sh
 $ mongod --dbpath=data --bind_ip 127.0.0.1
+```
