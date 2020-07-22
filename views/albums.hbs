@@ -2,7 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="/style.css">
 	<title>{{pageTitle}}</title>
 </head>
 <body>
@@ -12,9 +12,17 @@
         <h3 class="text-white">Instructions</h3>
 
         <div class="paragraph text-white d-flex flex-column align-items-start">
-            <h5>Type <span class="font-bold">/music/search?title</span> to search for an Artist, Song or Album</h5>
-            <h5>Type <span class="font-bold">/music/add?access_token</span> is for admin to add new films</h5>
-            <h5>Type <span class="font-bold">/music/del?access_token</span> is for admin to delete all the films</h5>
+            <h5>Type <span class="font-weight-bold mint">/music/search?title</span> to search for an Artist, Song or Album</h5>
+            
+            <h5>Type <a class="font-weight-bold mint" href="/music/show?access_token={{token}}">/music/show</a> to see albums added by admin in json form </h5>
+            
+            <h5>Type <a class="font-weight-bold mint" href="/music/showPretty?access_token={{token}}">/music/showPretty</a> to see albums added by admin in nice html/css form </h5>
+            
+            <h5>Type <a class="font-weight-bold mint" href="/music/add?access_token={{token}}">/music/add</a> is for admin to add new albums</h5>
+            
+            <h5>Type <a class="font-weight-bold mint" href="/music/del?access_token={{token}}">/music/del</a> is for admin to delete all albums</h5>
+            
+            <h5>Type <span class="font-weight-bold mint">/music/del/albumId</span> is for admin to delete album with that id</h5>
         </div>
         
 	</div>
