@@ -15,7 +15,7 @@ const search = (title, callback) => {
 
 
 	req.end(function (res) {
-		if(res.error) callback(error);
+		if(res.error) callback(res.error);
 		else callback(null, res.body);
 	});
 
