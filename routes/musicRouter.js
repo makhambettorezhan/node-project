@@ -1,5 +1,4 @@
 const express = require('express');
-
 const bodyParser = require('body-parser');
 
 const Albums = require('../models/albums');
@@ -13,9 +12,10 @@ const musicRouter = express.Router();
 musicRouter.use(bodyParser.json());
 
 
-musicRouter.get('/', (req, res, next) => {
+musicRouter.get('/', authenticate.verifyUser, (req, res, next) => {
     res.render('albums.hbs', {
-        pageTitle: 'Music albums selected by admin'
+        pageTitle: 'Music albums selected by admin',
+        token: req.query.access_token
     });
 });
 
@@ -28,6 +28,7 @@ musicRouter.get('/search', (req, res, next) => {
         res.json(result);
     }) 
 });
+
 musicRouter.get('/show', authenticate.verifyUser, (req, res, next) => {
     Albums.find({})
     .then(albums => {
@@ -38,7 +39,6 @@ musicRouter.get('/show', authenticate.verifyUser, (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
-
 
 musicRouter.get('/add', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.render('albums.add.hbs', {
@@ -105,6 +105,7 @@ musicRouter.get('/showPretty', authenticate.verifyUser, (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
+
 musicRouter.get('/showPretty/:albumId', authenticate.verifyUser, (req, res, next) => {
     Albums.findById({ _id: req.params.albumId })
     .then(album => {
