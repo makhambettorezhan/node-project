@@ -12,11 +12,15 @@
         <h3 class="text-white">Instructions</h3>
 
         <div class="paragraph text-white d-flex flex-column align-items-start">
-            <h5>Type <span class="font-weight-bold mint">/favorites/show</span> to see your favorite films in json form </h5>
-            <h5>Type <span class="font-weight-bold mint">/favorites/showPretty</span> to see your favorite films in nice html/css form </h5>
-            <h5>Type <span class="font-weight-bold mint">/favorites/add</span> to add new films to your favorite colletion</h5>
-            <h5>Type <span class="font-weight-bold mint">/favorites/del/filmId</span> to remove the film of that id from your collection</h5>
+            <h5>Type <a class="font-weight-bold mint" href="/favorites/show?access_token={{token}}">/favorites/show</a> to see your favorite films in json form </h5>
+            
+            <h5>Type <a class="font-weight-bold mint" href="/favorites/showPretty?access_token={{token}}">/favorites/showPretty</a> to see your favorite films in nice html/css form </h5>
+
+            <h5>Type <a class="font-weight-bold mint" href="/favorites/add?access_token={{token}}">/favorites/add</a> to add new films to your favorite colletion</h5>
+            
             <h5>Type <span class="font-weight-bold mint">/favorites/del</span> to remove all the films in your collection (DELETE method, i.e. works only on Postman) </h5>
+
+            <h5>Type <span class="font-weight-bold mint">/favorites/del/filmId</span> to remove the film of that id from your collection</h5>
         </div>
         
 	</div>

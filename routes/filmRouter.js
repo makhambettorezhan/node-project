@@ -4,18 +4,20 @@ const bodyParser = require('body-parser');
 
 const Films = require('../models/films');
 
-const config = require('../config');
 const imdb = require('../imdb');
 
 
 const filmRouter = express.Router();
 
 filmRouter.use(bodyParser.json());
-//filmRouter.use(express.static(config.pathString + '/public'));
 
-filmRouter.get('/', (req, res, next) => {
+filmRouter.get('/', authenticate.verifyUser, (req, res, next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+
     res.render('films.hbs', {
-        pageTitle: 'Films selected by admin'
+        pageTitle: 'Films selected by admin',
+        token: req.query.access_token
     });
 });
 

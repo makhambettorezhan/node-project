@@ -16,7 +16,8 @@ favoriteRouter.get('/', authenticate.verifyUser, (req, res, next) => {
     res.setHeader('Content-Type', 'text/html');
    
     res.render('favorites.hbs', {
-        pageTitle: 'Favorites Section for ' + req.user.username
+        pageTitle: 'Favorites Section for ' + req.user.username,
+        token: req.query.access_token
     });
 });
 
